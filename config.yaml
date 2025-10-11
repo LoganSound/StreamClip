@@ -1,0 +1,19 @@
+# Audio Stream Splitter Configuration
+
+stream_url: "https://mystream.com/sample.mp3"
+
+# Silence detection settings
+min_silence_len: 1500     # milliseconds
+silence_thresh: -35       # dBFS relative threshold
+keep_silence: 300         # milliseconds of silence to retain
+
+# Output settings
+output_dir: "./recordings"
+file_prefix: "segment"
+record_duration: 300       # seconds of capture per batch
+tmp_file: "./tmp/live_capture.wav"
+
+# Continuous mode
+loop: true
+sleep_interval: 0   # seconds to wait between loops
+
