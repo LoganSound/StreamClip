@@ -1,11 +1,12 @@
 # Audio Stream Splitter Configuration
 
-stream_url: "https://mystream.com/sample.mp3"
+stream_url: "https://example.com/stream.mp3"
 
 # Silence detection settings
 min_silence_len: 1500     # milliseconds
 silence_thresh: -35       # dBFS relative threshold
 keep_silence: 300         # milliseconds of silence to retain
+min_non_silence_dBFS: -50 # skip chunks quieter than this
 
 # Output settings
 output_dir: "./recordings"
@@ -15,5 +16,7 @@ tmp_file: "./tmp/live_capture.wav"
 
 # Continuous mode
 loop: true
-sleep_interval: 0   # seconds to wait between loops
+sleep_interval: 10         # seconds to wait between loops
 
+# Cleanup
+cleanup_temp_files: true   # delete temp .wav after Python processes it

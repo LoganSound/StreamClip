@@ -4,17 +4,17 @@ set -e
 CONFIG_FILE="./config.yaml"
 VENV_PATH="./venv"
 
-# Helper: simple YAML parser
+# Simple YAML parser
 function yget() {
   grep "^$1:" "$CONFIG_FILE" | awk '{print $2}' | tr -d '"'
 }
 
-# Load config
 STREAM_URL=$(yget stream_url)
 TMP_FILE=$(yget tmp_file)
 RECORD_DURATION=$(yget record_duration)
 LOOP=$(yget loop)
 SLEEP_INTERVAL=$(yget sleep_interval)
+CLEANUP=$(yget cleanup_temp_files)
 
 mkdir -p "$(dirname "$TMP_FILE")"
 mkdir -p "$(yget output_dir)"
@@ -37,14 +37,18 @@ run_once() {
       return
   fi
 
-  # Start Python processing in background and remove temp file after completion
+  # Background Python processing with optional cleanup
   (
     echo "🔊 Processing $TMP_SEGMENT..."
     "$VENV_PATH/bin/python" split_on_silence.py "$TMP_SEGMENT" "$CONFIG_FILE"
-    echo "🧹 Cleaning up temp file $TMP_SEGMENT"
-    rm -f "$TMP_SEGMENT"
-  ) &
 
+    if [ "$CLEANUP" == "true" ]; then
+        echo "🧹 Cleaning up temp file $TMP_SEGMENT"
+        rm -f "$TMP_SEGMENT"
+    else
+        echo "ℹ️ Keeping temp file $TMP_SEGMENT"
+    fi
+  ) &
 }
 
 if [ "$LOOP" == "true" ]; then
@@ -59,7 +63,6 @@ else
   run_once
 fi
 
-# Wait for all background Python processes to finish
+# Wait for all background processes to finish
 wait
 echo "✅ All processing complete."
-

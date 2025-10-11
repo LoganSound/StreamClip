@@ -1,0 +1,20 @@
+[Unit]
+Description=Continuous Audio Stream Capture and Split
+After=network.target
+
+[Service]
+Type=simple
+User=YOUR_USERNAME
+Group=YOUR_USERNAME
+WorkingDirectory=/path/to/your/project
+ExecStart=/bin/bash /path/to/your/project/capture_stream.sh
+Restart=always
+RestartSec=10
+Environment="PATH=/path/to/your/project/venv/bin:/usr/bin:/bin"
+
+# Logging
+StandardOutput=append:/path/to/your/project/logs/capture.log
+StandardError=append:/path/to/your/project/logs/capture.log
+
+[Install]
+WantedBy=multi-user.target
