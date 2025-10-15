@@ -4,6 +4,17 @@ set -e
 CONFIG_FILE="./config.yaml"
 VENV_PATH="./venv"
 
+# ✅ Virtual environment setup
+if [[ ! -d "$VENV_DIR" ]]; then
+    echo "⚙️  Creating virtual environment at $VENV_DIR"
+    python3 -m venv "$VENV_DIR"
+    source "$VENV_DIR/bin/activate"
+    pip install --upgrade pip
+    pip install -r "$BASE_DIR/requirements.txt"
+else
+    source "$VENV_DIR/bin/activate"
+fi
+
 # Simple YAML parser
 function yget() {
   grep "^$1:" "$CONFIG_FILE" | awk '{print $2}' | tr -d '"'

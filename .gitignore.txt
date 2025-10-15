@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.pyd
+*.pyo
+*.pyc
+
+# Virtual environment
+venv/
+.env/
+.venv/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Logs and temp files
+*.log
+*.tmp
+*.temp
+*.bak
+*.swp
+
+# Audio output files
+*.wav
+*.mp3
+*.flac
+*.aac
+*.ogg
+
+# Cache
+.cache/
+*.egg-info/
+dist/
+build/
+
+# IDE / Editor
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Configuration or credentials
+config.yaml
+.env.local
+.env.production
+.env.development
+
+# Systemd service files (optional)
+*.service
